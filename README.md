@@ -1,3 +1,6 @@
+This repo contains tasks for the [commercetools JS SDK](https://github.com/commercetools/nodejs) training.
+
+The participants should finish following tasks:
 - Configure and create client
 - Create a product
 - Query all products
