@@ -1,0 +1,8 @@
+- Configure and create client
+- Create a product
+- Query all products
+- Query a product by id
+- Create a cart
+- Update cart: add lineitem
+- Create an order from cart
+- Delete cart
