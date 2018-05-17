@@ -28,6 +28,4 @@ const getClient = function getClient() {
   });
 };
 
-module.exports.Client = {
-  Create: getClient
-};
+module.exports.getClient = getClient;
