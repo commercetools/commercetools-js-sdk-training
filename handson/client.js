@@ -13,27 +13,10 @@ const getClient = function getClient() {
   // TODO: 1.3
   // Use getCredentials
   // then createClient
-
-  // #region SOLUTION
+  
   // getCredentials pulls information from .ct-credentials.env
   // Credentials are stored by key CT_<KEY>
-  return getCredentials.getCredentials('adminkey').then((credentials) => {
-    const authConfig = {
-      host: authHost,
-      projectKey,
-      credentials,
-      scopes,
-    };
 
-    // create client
-    return sdkClient.createClient({
-      middlewares: [
-        middlewareAuth.createAuthMiddlewareForClientCredentialsFlow(authConfig),
-        httpMiddleware.createHttpMiddleware({ host }),
-      ]
-    });
-  });
-  // #endregion
 };
 
 module.exports.getClient = getClient;

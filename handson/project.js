@@ -8,16 +8,7 @@ const getProject = function getProject() {
   return getClient().then((client) => {
 
     // Use the request builder to execute project request
-    // #region SOLUTION
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const projectUri = requestBuilder.project.build();
-    const projectRequest = {
-      uri: projectUri,
-      method: 'GET'
-    };
 
-    return client.execute(projectRequest);
-    // #region SOLUTION
 
   });
 };
