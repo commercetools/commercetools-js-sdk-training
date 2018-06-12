@@ -3,11 +3,12 @@ const sdkRequestBuilder = require('@commercetools/api-request-builder');
 const { getClient, projectKey } = require('./client.js');
 
 const getTaxCategories = function getTaxCategories() {
-  // TODO: 2
+  // TODO: 3.6
   // Get a list of product types
+  
+  // #region SOLUTION
   return getClient().then((client) => {
 
-    // #region SOLUTION
     const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
     const taxCategoryUri = requestBuilder.taxCategories.build();
     const taxCategoryRequest = {
@@ -15,9 +16,9 @@ const getTaxCategories = function getTaxCategories() {
       method: 'GET'
     };
     return client.execute(taxCategoryRequest);
-    // #region SOLUTION
 
   });
+  // #region SOLUTION
 };
 
 module.exports.getTaxCategories = getTaxCategories;

@@ -3,11 +3,12 @@ const sdkRequestBuilder = require('@commercetools/api-request-builder');
 const { getClient, projectKey } = require('./client.js');
 
 const getProductTypes = function getProductTypes() {
-  // TODO: 3.1
+  // TODO: 2.4
   // Get a list of product types
+
+  // #region SOLUTION
   return getClient().then((client) => {
 
-    // #region SOLUTION
     const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
     const productTypeUri = requestBuilder.productTypes.build();
     const productRequest = {
@@ -15,13 +16,13 @@ const getProductTypes = function getProductTypes() {
       method: 'GET'
     };
     return client.execute(productRequest);
-    // #region SOLUTION
 
   });
+  // #region SOLUTION
 };
 
 const createProduct = function createProduct(name, key, description, productTypeId, sku, priceCentAmount, taxCategoryId) {
-  // TODO: 3.2
+  // TODO: 4
   //Create a product
 
   // #region SOLUTION

@@ -27,9 +27,9 @@ const createCart = function createCart(body) {
 const getCart = function getCart(cartId) {
   // TODO: 7
   // Get a list of product types
+  // #region SOLUTION
   return getClient().then((client) => {
 
-    // #region SOLUTION
     const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
     const cartUri = requestBuilder.carts.byId(cartId).build();
     const cartRequest = {
@@ -37,9 +37,9 @@ const getCart = function getCart(cartId) {
       method: 'GET'
     };
     return client.execute(cartRequest);
-    // #region SOLUTION
 
   });
+  // #region SOLUTION
 }
 
 const updateCart = function updateCart(cartId, version, SKU, customerId, country) {
