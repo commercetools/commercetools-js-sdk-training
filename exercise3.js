@@ -1,11 +1,9 @@
-const { createCustomer } = require('./handson/customer.js');
+const { getTaxCategories } = require('./handson/taxCategory.js');
 
-createCustomer(
-  'email@domain.com',
-  'password-asdf',
-  'John',
-  'Smith',
-  'US'
-).then((customer) => {
-  console.log(customer);
+// Complete getTaxCategories function in ./handson/taxCategory.js
+
+getTaxCategories().then(taxList => {
+  console.log(JSON.stringify(taxList, null, 4));
+}).catch(error => {
+  console.log(JSON.stringify(error, null, 4));
 });

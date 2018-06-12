@@ -1,12 +1,9 @@
-const middlewareAuth = require('@commercetools/sdk-middleware-auth');
-const httpMiddleware = require('@commercetools/sdk-middleware-http');
 const sdkRequestBuilder = require('@commercetools/api-request-builder');
 
-const { getClient } = require('./client.js');
-const projectKey = 'sdk-training-project';
+const { getClient, projectKey } = require('./client.js');
 
 const getProductTypes = function getProductTypes() {
-  // TODO: 2.2
+  // TODO: 3.1
   // Get a list of product types
   return getClient().then((client) => {
 
@@ -23,8 +20,8 @@ const getProductTypes = function getProductTypes() {
   });
 };
 
-const createProduct = function createProduct(name, key, description, productTypeId) {
-  // TODO: 2.3
+const createProduct = function createProduct(name, key, description, productTypeId, sku, priceCentAmount, taxCategoryId) {
+  // TODO: 3.2
   //Create a product
 
   // #region SOLUTION
@@ -36,13 +33,27 @@ const createProduct = function createProduct(name, key, description, productType
       method: 'POST',
       body: {
         name: { en: name },
-        key,
+        key: key,
         description: { en: description },
         productType: {
           id: productTypeId,
           typeId: 'product-type'
         },
-        slug: { en: name.replace(/ /g, '-').toLowerCase() }
+        slug: { en: key },
+        taxCategory: {
+          "typeId": "tax-category",
+          "id": taxCategoryId
+        },
+        masterVariant: {
+          sku: sku,
+          prices: [{
+            value: {
+              type: 'centPrecision',
+              currencyCode: 'USD',
+              centAmount: priceCentAmount
+            }
+          }]
+        }
       }
     };
     return client.execute(productRequest);

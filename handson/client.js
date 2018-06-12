@@ -37,3 +37,4 @@ const getClient = function getClient() {
 };
 
 module.exports.getClient = getClient;
+module.exports.projectKey = projectKey;
