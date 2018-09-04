@@ -1,10 +1,2 @@
-configure-client.js
-create-cart.js
-create-product.js
-index_create_state.js
-index_delete_state.js
-index_products.js
-index_update_state.js
-query-product-by-id.js
-query-products.js
+.node_modules
 .ct-credentials.env
