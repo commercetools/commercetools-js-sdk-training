@@ -3,6 +3,7 @@ const middlewareAuth = require('@commercetools/sdk-middleware-auth');
 const httpMiddleware = require('@commercetools/sdk-middleware-http');
 const sdkRequestBuilder = require('@commercetools/api-request-builder');
 const getCredentials = require('@commercetools/get-credentials');
+const fetch = require('node-fetch');
 
 const authHost = 'https://auth.commercetools.co';
 const projectKey = 'sdk-training-project';
