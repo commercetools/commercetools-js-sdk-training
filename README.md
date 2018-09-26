@@ -13,5 +13,7 @@ The participants should finish following tasks:
 - Create an order from cart
 - Delete cart
 
+Exercises are realized by completing the implementation the modules that are scaffolded in the `handson` folder.
+
 These exercises complement a training program.  If you are interested
 in attending a training, please [contact us directly.](https://ok.commercetools.com/contact-us-en)
