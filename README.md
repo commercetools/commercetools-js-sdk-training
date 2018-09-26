@@ -1,6 +1,10 @@
-This repo contains tasks for the [commercetools JS SDK](https://github.com/commercetools/nodejs) training.
+# Commercetools JavaScript Training Excercises
 
-The participants should finish following tasks:
+This repo contains exercises for the [commercetools JS SDK](https://github.com/commercetools/nodejs) training.
+
+The exercises are intended to run in node.js 8 on your local machine. 
+
+The participants should finish following exercises:
 - Configure and create client
 - Get project info
 - Query all product types
@@ -13,7 +17,9 @@ The participants should finish following tasks:
 - Create an order from cart
 - Delete cart
 
-Exercises are realized by completing the implementation the modules that are scaffolded in the `handson` folder.
+The `exercise*.js` scripts are typically not modified, the task is to implement the modules in `handson/` until the `exercise*.js` scripts show the intended behavior. 
 
-These exercises complement a training program.  If you are interested
-in attending a training, please [contact us directly.](https://ok.commercetools.com/contact-us-en)
+These exercises complement a training program, they do not intend to help understanding commercetools by themselves.
+
+If you are interested in attending a training, please [contact us directly.](https://ok.commercetools.com/contact-us-en).
+
