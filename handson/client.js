@@ -5,10 +5,14 @@ const sdkRequestBuilder = require('@commercetools/api-request-builder');
 const getCredentials = require('@commercetools/get-credentials');
 const fetch = require('node-fetch');
 
-const authHost = 'https://auth.commercetools.co';
-const projectKey = 'sdk-training-project';
-const scopes = ['manage_project:sdk-training-project'];
-const host = 'https://api.commercetools.co';
+// const host = 'https://api.commercetools.co'; // US
+const host = 'https://api.commercetools.com'; // EU
+// const authHost = 'https://auth.commercetools.co'; // US
+const authHost = 'https://auth.commercetools.com'; // EU
+// const projectKey = 'sdk-training-project'; // US
+const projectKey = 'ctp-jvm-sdk-training';  // EU
+
+const scopes = ['manage_project:' + projectKey];
 
 const getClient = function getClient() {
   // TODO: 1.3
@@ -17,8 +21,8 @@ const getClient = function getClient() {
 
   // #region SOLUTION
   // getCredentials pulls information from .ct-credentials.env
-  // Credentials are stored by key CT_<KEY>
-  return getCredentials.getCredentials('adminkey').then((credentials) => {
+  // Client ID Credentials are stored by key CT_<CLIENT>
+  return getCredentials.getCredentials('adminclient').then((credentials) => {
     const authConfig = {
       host: authHost,
       projectKey,
