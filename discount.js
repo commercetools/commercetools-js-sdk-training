@@ -1,4 +1,5 @@
 const { createDiscount } = require('./handson/cartDiscount.js');
+const log = require('./logger.js').log;
 
 //Complete the createDiscount function in ./handson/cartDiscount.js
 
@@ -9,9 +10,6 @@ const random = Math.random().toString(36).substring(5);
 
 const discountName = '10OFF-' + random;
 
-createDiscount(discountName).then(cartDiscount => {
-  //Make a note of your discountId for future exercises
-  console.log(cartDiscount);
-}).catch(error => {
-  console.log(error);
-});
+//Make a note of your discountId for future exercises
+createDiscount(discountName)
+  .then(log).catch(log);

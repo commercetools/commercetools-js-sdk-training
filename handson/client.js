@@ -11,7 +11,7 @@ const host = 'https://api.commercetools.com'; // EU
 const authHost = 'https://auth.commercetools.com'; // EU
 // const projectKey = 'sdk-training-project'; // US
 const projectKey = 'ctp-jvm-sdk-training';  // EU
-
+const log = require('../logger.js').log;
 const scopes = ['manage_project:' + projectKey];
 
 const getClient = function getClient() {

@@ -1,4 +1,5 @@
 const { createCustomer } = require('./handson/customer.js');
+const log = require('./logger.js').log;
 
 //Complete the createCustomer function in ./handson/customer.js
 
@@ -11,8 +12,4 @@ createCustomer(
   'John',
   'Smith',
   'US'
-).then(customer => {
-  console.log(customer);
-}).catch(error => {
-  console.log(JSON.stringify(error, null, 4));
-});
+).then(log).catch(log);

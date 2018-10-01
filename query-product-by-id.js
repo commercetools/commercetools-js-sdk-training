@@ -3,6 +3,7 @@ const createAuthMiddlewareForClientCredentialsFlow = require('@commercetools/sdk
 const createHttpMiddleware = require('@commercetools/sdk-middleware-http').createHttpMiddleware
 const createRequestBuilder = require('@commercetools/api-request-builder').createRequestBuilder
 const getCredentials = require('@commercetools/get-credentials').getCredentials
+const log = require('./logger.js').log;
 
 //pass credentials (after creating env)
 getCredentials('training-test').then(
@@ -34,10 +35,4 @@ getCredentials('training-test').then(
     }
 
      return client.execute(productRequest)
- })
-.then((product)=>{
-    console.log(JSON.stringify(product,null,2))
-    })
-.catch((error)=> {
-    console.error(error)
-})
+ }).then(log).catch(log);

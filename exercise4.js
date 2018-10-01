@@ -1,5 +1,6 @@
 const { getProductTypes, createProduct } = require('./handson/product.js');
 const { getTaxCategories } = require('./handson/taxCategory.js');
+const log = require('./logger.js').log;
 
 
 //Complete the function createProduct in ./handson/product.js
@@ -18,6 +19,7 @@ Promise.all([ptPromise, taxPromise]).then(function(values) {
   // prevents duplicate error with multiple participants.
   const random = Math.random().toString(36).substring(5);
 
+  // Save SKU for use later.
   createProduct(
     'ColeHaan Zero Grand 2',
     'zerogrand2-' + random,
@@ -26,13 +28,7 @@ Promise.all([ptPromise, taxPromise]).then(function(values) {
     'SKU-zerogrand-master-' + random,
     15000, //$150.00 assumed USD
     taxCategory.id
-  ).then(product => {
-    // Save SKU for use later.
-    console.log(JSON.stringify(product, null, 4));
-  }).catch(err => {
-    console.log(JSON.stringify(err, null, 4));
-  });
+  )
+  .then(log).catch(log);
 
-}).catch(error => {
-  console.log(JSON.stringify(error, null, 4));
-});
+}).catch(log);
