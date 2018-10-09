@@ -1,132 +1,41 @@
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-const log = require('../logger.js').log;
-const { getClient, projectKey } = require('./client.js');
+const { createRequestBuilder } = require('@commercetools/api-request-builder')
+const { getClient, projectKey } = require('./client.js')
+const { customerId } = require('./trainingHelpers.js');
 
-const createCart = function createCart(body) {
-  // TODO: 6
-  // Create a cart
-  // Required fields are being passed in body.
-  // Review all fields in docs https://docs.commercetools.com/http-api-projects-carts.html
 
-  // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const cartUri = requestBuilder.carts.build()
+const createCart = function createCart(currencyCode, countryCode, locale) {
+  // TODO 6.1: Create a cart for your customer
+  // https://docs.commercetools.com/http-api-projects-carts.html#create-cart 
+  // (only the currency is strictly required)
 
-    const cartRequest = { 
-          uri: cartUri,
-          method: 'POST',
-          body: body
-    }
 
-    return client.execute(cartRequest)
-  });
-  // #endregion
-};
-
-const getCart = function getCart(cartId) {
-  // TODO: 7
-  // Get a list of product types
-  // #region SOLUTION
-  return getClient().then((client) => {
-
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const cartUri = requestBuilder.carts.byId(cartId).build();
-    const cartRequest = {
-      uri: cartUri,
-      method: 'GET'
-    };
-    return client.execute(cartRequest);
-
-  });
-  // #region SOLUTION
 }
 
-const updateCart = function updateCart(cartId, version, SKU, customerId, country) {
-  // TODO: 8
-  // Update cart
+const getCart = function getCart() {
+  // TODO 7.1: Get the current cart of your customer
 
-  // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
 
-    const cartUri = requestBuilder.carts.byId(cartId).build();
-
-    const updateCartRequest = {
-      uri: cartUri,
-      method: 'POST',
-      body: {
-        "version": version,
-        "actions":[
-          {
-            "action": "addLineItem",
-            "sku": SKU,
-          },
-          {
-            "action": "setShippingAddress",
-            "address":
-            {
-              "country": country
-            }
-          },
-          {
-            "action": "setCustomerId",
-            "customerId": customerId
-          }
-        ]
-      }
-    };
-
-    return client.execute(updateCartRequest)
-  });
-  // #endregion
 }
 
-const createOrder = function createOrder(cartId, version) {
-  // TODO: 9
-  // Create an order from the cart
+const addProductToCart = function addProductToCart(SKU) {
+  // TODO 8.1: Update the current cart by adding the given product variant
 
-  // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const orderUri = requestBuilder.orders.build();
 
-    const orderRequest = {
-      uri: orderUri,
-      method: 'POST',
-      body: {
-        "id": cartId,
-        "version": version
-      }
-    };
-
-    return client.execute(orderRequest)
-  });
-  // #endregion
 }
 
-const deleteCart = function deleteCart(cartId, version) {
-  // TODO: 10
-  // Delete a cart
+const captureOrder = function captureOrder() {
+  // TODO 9.1: Create an order from your customer's current (=last modified) cart
 
-  // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const cartUri = requestBuilder.carts
-              .byId(cartId).withVersion(version).build();
 
-    const cartRequest = {
-          uri: cartUri,
-          method: 'DELETE'
-    };
+}
 
-    return client.execute(cartRequest);
-  });
-  // #endregion
+const deleteCurrentCart = function deleteCurrentCart() {
+  // TODO 10.1: Delete the user's current (=last modified) cart
+
 }
 
 module.exports.createCart = createCart;
 module.exports.getCart = getCart;
-module.exports.updateCart = updateCart;
-module.exports.createOrder = createOrder;
-module.exports.deleteCart = deleteCart;
+module.exports.addProductToCart = addProductToCart;
+module.exports.captureOrder = captureOrder;
+module.exports.deleteCurrentCart = deleteCurrentCart;
