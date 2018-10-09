@@ -13,13 +13,20 @@ Promise.all([getProductTypeByKey("shoe"), getTaxCategoryByKey("standard")])
   .then(function (values) {
     [productTypeResponse, taxCategoryResponse] = values;
     createProduct(
-      `ColeHaan Zero Grand 2 (${personalName})`,
-      `zerogrand2-${personalKey}`, // change to random to create more products
-      'Comfy dress shoes that feel like sneakers.',
-      productTypeResponse.body,
+      // name:
+      `ColeHaan Zero Grand 2 (${personalName})`, 
+      // key, change to random to create more products:
+      `zerogrand2-${personalKey}`, 
+      // description:
+      'Comfy dress shoes that feel like sneakers.', 
+      // productType:
+      productTypeResponse.body, 
+       // sku:
       `zerogrand-variant-X-${personalKey}`,
-      15000, // $150.00 or €150.00 depending on your implementation
-      taxCategoryResponse.body
+      // priceCentAmount ($150.00 or €150.00):
+      15000, 
+      // taxCategory
+      taxCategoryResponse.body 
     ).then(log)
       .catch(log);
 
