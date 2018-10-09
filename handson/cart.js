@@ -17,9 +17,9 @@ const getCart = function getCart() {
 
 }
 
-const updateCart = function updateCart(cartId, version, SKU, customerId, country) {
-  // TODO: 8
-  // Update cart
+const addProductToCart = function addProductToCart(SKU) {
+  // TODO 8.1: Update the current cart by adding the given product variant
+
 
 }
 
@@ -37,6 +37,6 @@ const deleteCart = function deleteCart(cartId, version) {
 
 module.exports.createCart = createCart;
 module.exports.getCart = getCart;
-module.exports.updateCart = updateCart;
+module.exports.addProductToCart = addProductToCart;
 module.exports.createOrder = createOrder;
 module.exports.deleteCart = deleteCart;
