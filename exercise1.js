@@ -5,6 +5,8 @@ const log = require('./logger.js').log;
 // ./handson/client.js
 // ./handson/project.js
 
-// So this code displays the project information.
+// So this code displays the project configuration
+// https://docs.commercetools.com/http-api-projects-project.html
 getProject()
-    .then(log).catch(log);
+    .then(log)
+    .catch(log);
