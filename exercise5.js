@@ -1,16 +1,14 @@
 const { createCustomer } = require('./handson/customer.js');
+const { random, personalFirstName, personalLastName, personalKey } = require('./handson/trainingHelpers.js');
 const log = require('./logger.js').log;
 
-//Complete the createCustomer function in ./handson/customer.js
-
-// TODO: 5.1
-// Update data to be unique
+// TODO 5.1: Complete the createCustomer function in ./handson/customer.js
 
 createCustomer(
-  'email@domain.com',
-  'password-asdf',
-  'John',
-  'Smith',
+  `${personalKey}@example.com`,
+  random,
+  personalFirstName,
+  personalLastName,
   'US'
 ).then(log)
   .catch(log);
