@@ -1,16 +1,11 @@
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
 const log = require('../logger.js').log;
 const { getClient, projectKey } = require('./client.js');
 
 const getProject = function getProject() {
   // TODO: 1.4
   // Complete the getClient function in ./handson/client.js
-  return getClient().then((client) => {
+  // Then use the SDK client here to execute a request on the project configuration API
 
-    // Use the request builder to execute project request
-
-
-  });
 };
 
 module.exports.getProject = getProject;
