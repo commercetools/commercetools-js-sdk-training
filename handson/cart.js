@@ -1,5 +1,5 @@
 const sdkRequestBuilder = require('@commercetools/api-request-builder');
-
+const log = require('../logger.js').log;
 const { getClient, projectKey } = require('./client.js');
 
 const createCart = function createCart(body) {
@@ -13,7 +13,7 @@ const createCart = function createCart(body) {
     const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
     const cartUri = requestBuilder.carts.build()
 
-    const cartRequest = {
+    const cartRequest = { 
           uri: cartUri,
           method: 'POST',
           body: body
