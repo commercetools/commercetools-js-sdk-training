@@ -1,4 +1,5 @@
 const { updateCart } = require('./handson/cart.js');
+const log = require('./logger.js').log;
 
 //Complete the updateCart function in ./handson/cart.js
 
@@ -8,9 +9,6 @@ const cartId = 'dae1e8d9-a50e-41c7-926c-6916afa9c0f3';  // From exercise 5
 const cartVersion = 5 // From exercise 5
 const Country = 'US';
 
-updateCart(cartId, cartVersion, SKU, customerId, Country).then(cart => {
-  // Save cart version for additional updates.
-  console.log(JSON.stringify(cart, null, 4));
-}).catch(error => {
-  console.log(JSON.stringify(error, null, 4));
-});
+// Save cart version for additional updates.
+updateCart(cartId, cartVersion, SKU, customerId, Country)
+  .then(log).catch(log);
