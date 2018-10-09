@@ -12,4 +12,5 @@ createCustomer(
   'John',
   'Smith',
   'US'
-).then(log).catch(log);
+).then(log)
+  .catch(log);

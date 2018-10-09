@@ -11,4 +11,5 @@ const Country = 'US';
 
 // Save cart version for additional updates.
 updateCart(cartId, cartVersion, SKU, customerId, Country)
-  .then(log).catch(log);
+  .then(log)
+  .catch(log);

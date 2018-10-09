@@ -10,7 +10,7 @@ const log = require('./logger.js').log;
 var ptPromise = getProductTypes();
 var taxPromise = getTaxCategories();
 
-Promise.all([ptPromise, taxPromise]).then(function(values) {
+Promise.all([ptPromise, taxPromise]).then(function (values) {
   const productType = values[0].body.results[0];
   const taxCategory = values[1].body.results[0];
 
@@ -29,6 +29,7 @@ Promise.all([ptPromise, taxPromise]).then(function(values) {
     15000, //$150.00 assumed USD
     taxCategory.id
   )
-  .then(log).catch(log);
+    .then(log)
+    .catch(log);
 
 }).catch(log);

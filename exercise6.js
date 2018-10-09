@@ -9,4 +9,5 @@ const body = {
 
 //Make a note of your cartID for future exercises
 createCart(body)
-  .then(log).catch(log);
+  .then(log)
+  .catch(log);
