@@ -4,6 +4,7 @@ const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http');
 const fetch = require('node-fetch');
 
 // TODO: 1.3 centrally provide project key 
+module.exports.projectKey = "";
 
 const getClient = function getClient() {
   // TODO: 1.3
