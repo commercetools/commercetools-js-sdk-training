@@ -3,12 +3,11 @@ const { createAuthMiddlewareForClientCredentialsFlow } = require('@commercetools
 const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http');
 const fetch = require('node-fetch');
 
-// TODO: 1.3 centrally provide project key 
+// TODO 1.1: centrally provide project key 
 module.exports.projectKey = "";
 
 const getClient = function getClient() {
-  // TODO: 1.3
-  // return a commercetools SDK client
+  // TODO 1.2: build and return a commercetools SDK client
   // https://commercetools.github.io/nodejs/sdk/api/sdkClient.html
 
 };

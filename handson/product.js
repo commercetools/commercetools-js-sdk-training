@@ -2,14 +2,11 @@ const log = require('../logger.js').log;
 const { getClient, projectKey } = require('./client.js');
 
 const getProductTypes = function getProductTypes() {
-  // TODO: 2.4
-  // Get a list of product types
+  // TODO 2: Get a list of product types
 
 };
 
 const createProduct = function createProduct(name, key, description, productTypeId, sku, priceCentAmount, taxCategoryId) {
-  // TODO: 4
-  //Create a product
 
 };
 
