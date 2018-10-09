@@ -11,6 +11,26 @@ const createCustomer = function createCustomer(
   // TODO: 5
   // Create a customer
 
+  // #region SOLUTION
+  return getClient().execute({
+    uri: createRequestBuilder({projectKey}).customers.build(),
+    method: 'POST',
+    body: {
+      email,
+      password,
+      firstName,
+      lastName, 
+      addresses: [{
+        country: countryCode
+      }],
+      defaultBillingAddress: 0,
+      billingAddresses: [0],
+      defaultShippingAddress: 0,
+      shippingAddresses: [0],
+      locale: 'en'
+    }
+  })
+  // #endregion
 
 };
 

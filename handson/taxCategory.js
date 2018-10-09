@@ -10,6 +10,15 @@ const getTaxCategoryByKey = function getTaxCategoryByKey(key) {
   // Tip: You don't need custom services, the default CTP services are automatically provided:
   // https://github.com/commercetools/nodejs/blob/master/packages/api-request-builder/src/default-services.js
 
+  // #region SOLUTION
+  const requestBuilder = createRequestBuilder({
+    projectKey
+  })
+  return getClient().execute({
+    uri: requestBuilder.taxCategories.byKey(key).build(),
+    method: 'GET'
+  })
+  // #endregion
 
 };
 

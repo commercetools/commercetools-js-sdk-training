@@ -16,3 +16,14 @@ module.exports.random = Math.random().toString(36).substring(5);
 
 // TODO 5.2: fill this with the ID you got in exercise 5 when creating your customer
 // module.exports.customerId = '' 
+
+// #region SOLUTION
+const firstName = 'Commercetools'
+const lastName = 'Trainer 1'
+module.exports.personalFirstName = firstName
+module.exports.personalLastName = lastName
+module.exports.personalName = `${firstName} ${lastName}`
+module.exports.personalKey = `${firstName} ${lastName}`.replace(/[^0-9a-z_-]/gi, '').toLowerCase()
+// set this once the customer is created (required for all other solutions to run)
+// module.exports.customerId = ''
+// #endregion
