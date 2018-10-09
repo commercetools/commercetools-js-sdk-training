@@ -23,20 +23,19 @@ const addProductToCart = function addProductToCart(SKU) {
 
 }
 
-const createOrder = function createOrder(cartId, version) {
-  // TODO: 9
-  // Create an order from the cart
+const captureOrder = function captureOrder() {
+  // TODO 9.1: Create an order from your customer's current (=last modified) cart
+
 
 }
 
-const deleteCart = function deleteCart(cartId, version) {
-  // TODO: 10
-  // Delete a cart
+const deleteCurrentCart = function deleteCurrentCart() {
+  // TODO 10.1: Delete the user's current (=last modified) cart
 
 }
 
 module.exports.createCart = createCart;
 module.exports.getCart = getCart;
 module.exports.addProductToCart = addProductToCart;
-module.exports.createOrder = createOrder;
-module.exports.deleteCart = deleteCart;
+module.exports.captureOrder = captureOrder;
+module.exports.deleteCurrentCart = deleteCurrentCart;

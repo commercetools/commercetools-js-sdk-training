@@ -10,6 +10,7 @@ const getClient = function getClient() {
   // TODO 1.2: build and return a commercetools SDK client
   // https://commercetools.github.io/nodejs/sdk/api/sdkClient.html
 
+
 };
 
 module.exports.getClient = getClient;
