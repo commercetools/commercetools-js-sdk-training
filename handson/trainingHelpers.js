@@ -4,7 +4,8 @@
 // Random String to create unique keys and skus that do not collide with others in the training
 module.exports.random = Math.random().toString(36).substring(5);
 
-// TODO 4.0: define your personal name and "id" for key fields to not collide with others in the training
+// TODO 4.0: define your personal name and "id" for key fields by exporting the following commented values
+// Why? To not collide with the data others want to create in the training
 
 // const firstName = 'TODO your name'
 // const lastName = 'TODO another part of your name'
