@@ -1,5 +1,4 @@
 const { createRequestBuilder } = require('@commercetools/api-request-builder');
-const log = require('../logger.js').log;
 const { getClient, projectKey } = require('./client.js');
 
 const getTaxCategoryByKey = function getTaxCategoryByKey(key) {
