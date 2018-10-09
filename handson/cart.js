@@ -11,9 +11,9 @@ const createCart = function createCart(currencyCode, countryCode, locale) {
 
 }
 
-const getCart = function getCart(cartId) {
-  // TODO: 7
-  // Get a list of product types
+const getCart = function getCart() {
+  // TODO 7.1: Get the current cart of your customer
+
 
 }
 
