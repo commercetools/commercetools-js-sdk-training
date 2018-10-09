@@ -13,7 +13,10 @@ const codeLog = function (o, lang) {
 
 module.exports.log = function (o, lang) {
     lang = lang ? lang : 'json';
-    if (o.hasOwnProperty('body')
+    if (o.hasOwnProperty('stack')) {
+        console.error(o)
+    }
+    else if (o.hasOwnProperty('body')
         && o.hasOwnProperty('statusCode')
         && o.statusCode < 220) {
         codeLog(o.body, 'json');
@@ -22,7 +25,8 @@ module.exports.log = function (o, lang) {
         setTimeout(() => {
             rainbow.stop();
         }, 2000);
-    } else {
+    }
+    else {
         codeLog(o);
     }
 }
