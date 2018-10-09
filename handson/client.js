@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 // TODO 1.1: centrally provide project key 
 module.exports.projectKey = "";
 // #region SOLUTION
-module.exports.projectKey = "ctp-jvm-sdk-training";
+module.exports.projectKey = "TODO";
 // #endregion
 
 const getClient = function getClient() {
@@ -14,23 +14,23 @@ const getClient = function getClient() {
   // https://commercetools.github.io/nodejs/sdk/api/sdkClient.html
 
   // #region SOLUTION
-  const projectKey = 'ctp-jvm-sdk-training'
+  const projectKey = 'TODO'
 
   // TIP: All below can be copied from Merchant Center when creating an API Client
   //    BUT: there is/was a bug that the "scopes" were not wrapped in an array in the generated code.  
   //    BUT: the generated code does not yet pass a "fetch" implementation, you also have to add that. 
   const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
-    host: 'https://auth.commercetools.com',
+    host: 'https://auth.commercetools.TODO',
     projectKey,
     credentials: {
-      clientId: 'WQbv9zwvcnMIqTi2XhW8GV5I',
-      clientSecret: 'Nn5Yf-kX_llNk2T1fLQMX1VClJbFS54X',
+      clientId: 'TODO',
+      clientSecret: 'TODO',
     },
     scopes: [`manage_project:${projectKey}`],
     fetch
   })
   const httpMiddleware = createHttpMiddleware({
-    host: 'https://api.commercetools.com',
+    host: 'https://api.commercetools.TODO',
     fetch
   })
   const client = createClient({
