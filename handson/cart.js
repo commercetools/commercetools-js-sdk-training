@@ -1,13 +1,15 @@
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-const { getClient, projectKey } = require('./client.js');
+const { createRequestBuilder } = require('@commercetools/api-request-builder')
+const { getClient, projectKey } = require('./client.js')
+const { customerId } = require('./trainingHelpers.js');
 
-const createCart = function createCart(body) {
-  // TODO: 6
-  // Create a cart
-  // Required fields are being passed in body.
-  // Review all fields in docs https://docs.commercetools.com/http-api-projects-carts.html
 
-};
+const createCart = function createCart(currencyCode, countryCode, locale) {
+  // TODO 6.1: Create a cart for your customer
+  // https://docs.commercetools.com/http-api-projects-carts.html#create-cart 
+  // (only the currency is strictly required)
+
+
+}
 
 const getCart = function getCart(cartId) {
   // TODO: 7

@@ -5,12 +5,24 @@
 module.exports.random = Math.random().toString(36).substring(5);
 
 // TODO 4.0: define your personal name and "id" for key fields by exporting the following commented values
-// Why? To not collide with the data others want to create in the training
+// This is to not collide with the identical data others want to create in the training
 
 // const firstName = 'TODO your name'
 // const lastName = 'TODO another part of your name'
-// module.exports.personalFirstName = firstName;
-// module.exports.personalLastName = lastName;
-// module.exports.personalName = `${firstName} ${lastName}`;
-// module.exports.personalKey = `${firstName} ${lastName}`.replace(/[^0-9a-z_-]/gi, '').toLowerCase();
+// module.exports.personalFirstName = firstName
+// module.exports.personalLastName = lastName
+// module.exports.personalName = `${firstName} ${lastName}`
+// module.exports.personalKey = `${firstName} ${lastName}`.replace(/[^0-9a-z_-]/gi, '').toLowerCase()
 
+// TODO 5.2: fill this with the ID you got in exercise 5 when creating your customer
+// module.exports.customerId = '' 
+
+// #region SOLUTION
+const firstName = 'Nikolaus'
+const lastName = 'Kühn3'
+module.exports.personalFirstName = firstName
+module.exports.personalLastName = lastName
+module.exports.personalName = `${firstName} ${lastName}`
+module.exports.personalKey = `${firstName} ${lastName}`.replace(/[^0-9a-z_-]/gi, '').toLowerCase()
+module.exports.customerId = '2d27becd-27ba-4572-b9c5-f02ab3bfe38c'
+// #endregion
