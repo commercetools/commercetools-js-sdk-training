@@ -74,6 +74,7 @@ const captureOrder = function captureOrder() {
       id: currentCartResult.body.id,
       version: currentCartResult.body.version,
     }
+
     return getClient().execute({
       uri: createRequestBuilder({ projectKey }).orders.build(),
       method: 'POST',
@@ -87,18 +88,18 @@ const captureOrder = function captureOrder() {
 const deleteCurrentCart = function deleteCurrentCart() {
   // TODO 10.1: Delete the user's current (=last modified) cart
 
-    // #region SOLUTION
-    return getCart().then((currentCartResult) => {
-      return getClient().execute({
-        uri: createRequestBuilder({ projectKey }).carts
-          .byId(currentCartResult.body.id)
-          .withVersion(currentCartResult.body.version)
-          .build(),
-        method: 'DELETE'
-      })
+  // #region SOLUTION
+  return getCart().then((currentCartResult) => {
+    return getClient().execute({
+      uri: createRequestBuilder({ projectKey }).carts
+        .byId(currentCartResult.body.id)
+        .withVersion(currentCartResult.body.version)
+        .build(),
+      method: 'DELETE'
     })
-    // #endregion
-  
+  })
+  // #endregion
+
 }
 
 module.exports.createCart = createCart;
