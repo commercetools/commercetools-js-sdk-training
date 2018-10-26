@@ -18,6 +18,7 @@
     "@commercetools/sdk-client": "^1.5.8",
     "@commercetools/sdk-middleware-auth": "^4.0.3",
     "@commercetools/sdk-middleware-http": "^4.0.2",
+    "@google-cloud/pubsub": "^0.20.1",
     "chalk-animation": "^1.6.0",
     "cli-highlight": "^2.0.0",
     "node-fetch": "^2.2.0"
