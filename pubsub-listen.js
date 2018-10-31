@@ -14,12 +14,14 @@ const subscription = pubsub.subscription(subscriptionName);
 // Create an event handler to handle messages
 let messageCount = 0;
 const messageHandler = message => {
-    log(`Received message ${message.id}:`);
+    console.log(`Received message ${message.id}:`);
     const payload = Buffer.from(message.data, 'base64').toString();
     try{
-        payload = JSON.parse(payload);
-    }catch{}
-    log(payload);
+        payloadObj = JSON.parse(payload);
+        log(payloadObj)
+    }catch{
+        log(payload);
+    }
     messageCount += 1;
 
     // "Ack" (acknowledge receipt of) the message
