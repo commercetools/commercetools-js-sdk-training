@@ -1,46 +1,44 @@
-const sdkClient = require('@commercetools/sdk-client');
-const middlewareAuth = require('@commercetools/sdk-middleware-auth');
-const httpMiddleware = require('@commercetools/sdk-middleware-http');
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-const getCredentials = require('@commercetools/get-credentials');
+const { createClient } = require('@commercetools/sdk-client');
+const { createAuthMiddlewareForClientCredentialsFlow } = require('@commercetools/sdk-middleware-auth');
+const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http');
 const fetch = require('node-fetch');
 
-// const host = 'https://api.commercetools.co'; // US
-const host = 'https://api.commercetools.com'; // EU
-// const authHost = 'https://auth.commercetools.co'; // US
-const authHost = 'https://auth.commercetools.com'; // EU
-// const projectKey = 'sdk-training-project'; // US
-const projectKey = 'ctp-jvm-sdk-training';  // EU
-const log = require('../logger.js').log;
-const scopes = ['manage_project:' + projectKey];
+// TODO 1.1: centrally provide project key 
+module.exports.projectKey = "";
+// #region SOLUTION
+module.exports.projectKey = "TODO";
+// #endregion
 
 const getClient = function getClient() {
-  // TODO: 1.3
-  // Use getCredentials
-  // then createClient
+  // TODO 1.2: build and return a commercetools SDK client
+  // https://commercetools.github.io/nodejs/sdk/api/sdkClient.html
 
   // #region SOLUTION
-  // getCredentials pulls information from .ct-credentials.env
-  // Client ID Credentials are stored by key CT_<CLIENT>
-  return getCredentials.getCredentials('adminclient').then((credentials) => {
-    const authConfig = {
-      host: authHost,
-      projectKey,
-      credentials,
-      scopes,
-      fetch
-    };
+  const projectKey = 'TODO'
 
-    // create client
-    return sdkClient.createClient({
-      middlewares: [
-        middlewareAuth.createAuthMiddlewareForClientCredentialsFlow(authConfig),
-        httpMiddleware.createHttpMiddleware({ host, fetch }),
-      ]
-    });
-  });
+  // TIP: All below can be copied from Merchant Center when creating an API Client
+  //    BUT: there is/was a bug that the "scopes" were not wrapped in an array in the generated code.  
+  //    BUT: the generated code does not yet pass a "fetch" implementation, you also have to add that. 
+  const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
+    host: 'https://auth.commercetools.TODO',
+    projectKey,
+    credentials: {
+      clientId: 'TODO',
+      clientSecret: 'TODO',
+    },
+    scopes: [`manage_project:${projectKey}`],
+    fetch
+  })
+  const httpMiddleware = createHttpMiddleware({
+    host: 'https://api.commercetools.TODO',
+    fetch
+  })
+  const client = createClient({
+    middlewares: [authMiddleware, httpMiddleware],
+  })
+  return client
   // #endregion
+
 };
 
 module.exports.getClient = getClient;
-module.exports.projectKey = projectKey;

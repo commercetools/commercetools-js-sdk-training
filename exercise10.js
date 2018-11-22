@@ -1,10 +1,10 @@
-const { deleteCart } = require('./handson/cart.js');
+const { deleteCurrentCart } = require('./handson/cart.js');
 const log = require('./logger.js').log;
 
-//Complete the deleteCart function in ./handson/cart.js
+// TODO 10.1: Complete the deleteCurrentCart function in ./handson/cart.js
+// TODO 10.2: Run until all your old carts are deleted. 
+//            Then run one "clean" round trip of the functionality you built until now.
 
-const cartId = 'dae1e8d9-a50e-41c7-926c-6916afa9c0f3';
-const cartVersion = 12;
-
-deleteCart(cartId, cartVersion)
-  .then(log).catch(log);
+deleteCurrentCart()
+  .then(log)
+  .catch(log);

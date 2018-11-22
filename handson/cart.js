@@ -1,132 +1,109 @@
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-const log = require('../logger.js').log;
-const { getClient, projectKey } = require('./client.js');
+const { createRequestBuilder } = require('@commercetools/api-request-builder')
+const { getClient, projectKey } = require('./client.js')
+const { customerId } = require('./trainingHelpers.js');
 
-const createCart = function createCart(body) {
-  // TODO: 6
-  // Create a cart
-  // Required fields are being passed in body.
-  // Review all fields in docs https://docs.commercetools.com/http-api-projects-carts.html
+
+const createCart = function createCart(currencyCode, countryCode, locale) {
+  // TODO 6.1: Create a cart for your customer
+  // https://docs.commercetools.com/http-api-projects-carts.html#create-cart 
+  // (only the currency is strictly required)
 
   // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const cartUri = requestBuilder.carts.build()
+  const cartDraft = {
+    currency: currencyCode,
+    customerId,
+    country: countryCode,
+    locale,
+    shippingAddress: {
+      country: countryCode
+    }
+  }
+  return getClient().execute({
+    uri: createRequestBuilder({ projectKey }).carts.build(),
+    method: 'POST',
+    body: cartDraft
+  })
+  // #endregion
 
-    const cartRequest = { 
-          uri: cartUri,
-          method: 'POST',
-          body: body
+}
+
+const getCart = function getCart() {
+  // TODO 7.1: Get the current cart of your customer
+
+  // #region SOLUTION
+  return getClient().execute({
+    uri: createRequestBuilder({ projectKey }).carts.byCustomerId(customerId).build(),
+    method: 'GET'
+  })
+  // #endregion
+
+}
+
+const addProductToCart = function addProductToCart(SKU) {
+  // TODO 8.1: Update the current cart by adding the given product variant
+
+  // #region SOLUTION
+  return getCart().then((currentCartResult) => {
+    const updateActions = [
+      {
+        action: 'addLineItem',
+        sku: SKU
+      }
+    ];
+    return getClient().execute({
+      uri: createRequestBuilder({ projectKey })
+        .carts.byId(currentCartResult.body.id)
+        .build(),
+      method: 'POST',
+      body: {
+        version: currentCartResult.body.version,
+        actions: updateActions
+      }
+    })
+  })
+  // #endregion
+
+}
+
+const captureOrder = function captureOrder() {
+  // TODO 9.1: Create an order from your customer's current (=last modified) cart
+
+  // #region SOLUTION
+  return getCart().then((currentCartResult) => {
+    const orderFromCartDraft = {
+      id: currentCartResult.body.id,
+      version: currentCartResult.body.version,
     }
 
-    return client.execute(cartRequest)
-  });
-  // #endregion
-};
-
-const getCart = function getCart(cartId) {
-  // TODO: 7
-  // Get a list of product types
-  // #region SOLUTION
-  return getClient().then((client) => {
-
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const cartUri = requestBuilder.carts.byId(cartId).build();
-    const cartRequest = {
-      uri: cartUri,
-      method: 'GET'
-    };
-    return client.execute(cartRequest);
-
-  });
-  // #region SOLUTION
-}
-
-const updateCart = function updateCart(cartId, version, SKU, customerId, country) {
-  // TODO: 8
-  // Update cart
-
-  // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-
-    const cartUri = requestBuilder.carts.byId(cartId).build();
-
-    const updateCartRequest = {
-      uri: cartUri,
+    return getClient().execute({
+      uri: createRequestBuilder({ projectKey }).orders.build(),
       method: 'POST',
-      body: {
-        "version": version,
-        "actions":[
-          {
-            "action": "addLineItem",
-            "sku": SKU,
-          },
-          {
-            "action": "setShippingAddress",
-            "address":
-            {
-              "country": country
-            }
-          },
-          {
-            "action": "setCustomerId",
-            "customerId": customerId
-          }
-        ]
-      }
-    };
-
-    return client.execute(updateCartRequest)
-  });
+      body: orderFromCartDraft
+    })
+  })
   // #endregion
+
 }
 
-const createOrder = function createOrder(cartId, version) {
-  // TODO: 9
-  // Create an order from the cart
+const deleteCurrentCart = function deleteCurrentCart() {
+  // TODO 10.1: Delete the user's current (=last modified) cart
 
   // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const orderUri = requestBuilder.orders.build();
-
-    const orderRequest = {
-      uri: orderUri,
-      method: 'POST',
-      body: {
-        "id": cartId,
-        "version": version
-      }
-    };
-
-    return client.execute(orderRequest)
-  });
+  return getCart().then((currentCartResult) => {
+    return getClient().execute({
+      uri: createRequestBuilder({ projectKey }).carts
+        .byId(currentCartResult.body.id)
+        .withVersion(currentCartResult.body.version)
+        .build(),
+      method: 'DELETE'
+    })
+  })
   // #endregion
-}
 
-const deleteCart = function deleteCart(cartId, version) {
-  // TODO: 10
-  // Delete a cart
-
-  // #region SOLUTION
-  return getClient().then(client => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const cartUri = requestBuilder.carts
-              .byId(cartId).withVersion(version).build();
-
-    const cartRequest = {
-          uri: cartUri,
-          method: 'DELETE'
-    };
-
-    return client.execute(cartRequest);
-  });
-  // #endregion
 }
 
 module.exports.createCart = createCart;
 module.exports.getCart = getCart;
-module.exports.updateCart = updateCart;
-module.exports.createOrder = createOrder;
-module.exports.deleteCart = deleteCart;
+module.exports.addProductToCart = addProductToCart;
+module.exports.captureOrder = captureOrder;
+module.exports.deleteCurrentCart = deleteCurrentCart;
