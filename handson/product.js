@@ -79,15 +79,24 @@ const createProduct = function createProduct(name, key, description, productType
 
 };
 
-const queryProducts = function queryProducts(attributeName, attributeValue) {
+const queryProducts = function queryProducts(attributeName, attributeValue, locale) {
   // TODO 4.E: Implement querying products by given attribute name and value
   // Use the query builder and try to reproduce the query in IMPEX.commercetools.com 
 
   // #region SOLUTION
+  const uriBuilder = createRequestBuilder({ projectKey })
+    .products
+    .where(`variants.attributes.name = "${attributeName}"`)
+    .whereOperator('and');
+  if (locale) {
+    uriBuilder.where(`variants.attributes.value.${locale} = "${attributeName}"`)
+  } else {
+    uriBuilder.where(`variants.attributes.value = "${attributeName}"`)
+  }
+  // optional extension: read the product type and dynamically adjust to the attribute type
   return getClient().execute({
-    uri: createRequestBuilder({ projectKey })
-      .products
-      .XXX
+    uri: uriBuilder
+      .expand('productType')
       .build(),
     method: 'GET'
   })
@@ -103,6 +112,7 @@ const searchProducts = function searchProducts(userInput) {
   return getClient().execute({
     uri: createRequestBuilder({ projectKey })
       .products
+      .productProjections
       .XXX
       .build(),
     method: 'GET'
