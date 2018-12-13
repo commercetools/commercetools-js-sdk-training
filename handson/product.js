@@ -79,6 +79,40 @@ const createProduct = function createProduct(name, key, description, productType
 
 };
 
+const queryProducts = function queryProducts(attributeName, attributeValue) {
+  // TODO 4.E: Implement querying products by given attribute name and value
+  // Use the query builder and try to reproduce the query in IMPEX.commercetools.com 
+
+  // #region SOLUTION
+  return getClient().execute({
+    uri: createRequestBuilder({ projectKey })
+      .products
+      .XXX
+      .build(),
+    method: 'GET'
+  })
+  // #endregion
+
+};
+
+const searchProducts = function searchProducts(userInput) {
+  // TODO 4.F: Implement searching for products given the user's free text input. 
+  // Include some facets and try out other search features if you have time left.  
+
+  // #region SOLUTION
+  return getClient().execute({
+    uri: createRequestBuilder({ projectKey })
+      .products
+      .XXX
+      .build(),
+    method: 'GET'
+  })
+  // #endregion
+
+};
+
 module.exports.getProductTypes = getProductTypes;
 module.exports.getProductTypeByKey = getProductTypeByKey;
 module.exports.createProduct = createProduct;
+module.exports.queryProducts = queryProducts;
+module.exports.queryProducts = searchProducts;
