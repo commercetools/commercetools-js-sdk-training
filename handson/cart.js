@@ -12,7 +12,6 @@ const createCart = function createCart(currencyCode, countryCode, locale) {
   const cartDraft = {
     currency: currencyCode,
     customerId,
-    country: countryCode,
     locale,
     shippingAddress: {
       country: countryCode
