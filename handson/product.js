@@ -16,7 +16,8 @@ const getProductTypes = function getProductTypes() {
 };
 
 const getProductTypeByKey = function getProductTypeByKey(key) {
-  // TODO 4.2: Implement getting a product type by key
+  // TODO 4.C: Implement getting a product type by key
+  // Do use the request builder to build the URI
 
   // #region SOLUTION
   return getClient().execute({
@@ -27,8 +28,9 @@ const getProductTypeByKey = function getProductTypeByKey(key) {
 
 };
 
-const createProduct = function createProduct(name, key, description, productType, sku, priceCentAmount, taxCategory) {
-  // TODO 4.3: Create a product
+const createProduct = function createProduct(name, key, description, productTypeKey, sku, priceCentAmount, taxCategoryKey) {
+  // TODO 4.D: Create a product, understand ResourceIdentifier vs. Reference
+  // https://docs.commercetools.com/http-api-types#resourceidentifier
   // https://docs.commercetools.com/http-api-projects-products.html#create-a-product
 
   // #region SOLUTION
@@ -38,9 +40,7 @@ const createProduct = function createProduct(name, key, description, productType
       "en": name
     },
     productType: {
-      typeId: "product-type",
-      id: productType.id
-      // correct alternative:: "key: productType.key"
+      key: productTypeKey
     },
     slug: {
       "en": name.replace(/[^0-9a-z_-]/gi, '-').substring(0, 256)
@@ -53,7 +53,7 @@ const createProduct = function createProduct(name, key, description, productType
       prices: [{
         value: {
           centAmount: priceCentAmount,
-          currencyCode: "EUR" 
+          currencyCode: "EUR"
         }
       },
       {
@@ -63,9 +63,8 @@ const createProduct = function createProduct(name, key, description, productType
         }
       }]
     },
-    taxCategory:{
-      typeId: "tax-category",
-      id: taxCategory.id
+    taxCategory: {
+      key: taxCategoryKey
     }
   };
 
