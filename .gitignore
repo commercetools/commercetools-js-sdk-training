@@ -1,2 +1,3 @@
 node_modules
 .ct-credentials.env
+*.service-account.json
