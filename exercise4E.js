@@ -5,10 +5,9 @@ const log = require('./logger.js').log;
 
 queryProducts(
     // attributeName
-    'foo',
+    'brand',
     // attributeValue
-    'bar',
-    // (optional) locale (set if the the attribute is a localized one)
-    'en'
-).then(log)
-  .catch(log);
+    'ColeHaan'
+    )
+    .then(log)
+    .catch(log);
