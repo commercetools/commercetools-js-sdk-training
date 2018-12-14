@@ -1,7 +1,4 @@
-const middlewareAuth = require('@commercetools/sdk-middleware-auth');
-const httpMiddleware = require('@commercetools/sdk-middleware-http');
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-const log = require('../logger.js').log;
+const { createRequestBuilder } = require('@commercetools/api-request-builder');
 const { getClient, projectKey } = require('./client.js');
 
 const createCustomer = function createCustomer(
@@ -9,10 +6,11 @@ const createCustomer = function createCustomer(
   password,
   firstName,
   lastName,
-  country
+  countryCode
 ) {
   // TODO: 5
   // Create a customer
+
 
 };
 

@@ -1,34 +1,33 @@
-const { getProductTypes, createProduct } = require('./handson/product.js');
-const { getTaxCategories } = require('./handson/taxCategory.js');
+const { getProductTypeByKey, createProduct } = require('./handson/product.js');
+const { getTaxCategoryByKey } = require('./handson/taxCategory.js');
+const { random, personalName, personalKey } = require('./handson/trainingHelpers.js');
 const log = require('./logger.js').log;
 
+// TODO 4.0 : Expose a unique personal string in ./handson/trainingHelpers.js to not collide with other participants
+// TODO 4.1 : Use Merchant Center to make sure that the project has a product type with key "shoe"
+// TODO 4.2 : Complete the function getProductTypeByKey in ./handson/product.js 
+// TODO 4.3 : Complete the function createProduct in ./handson/product.js
 
-//Complete the function createProduct in ./handson/product.js
+// Uses your functions getProductTypes and getTaxCategoryByKey to create a new product
+Promise.all([getProductTypeByKey("shoe"), getTaxCategoryByKey("standard")])
+  .then(function (values) {
+    [productTypeResponse, taxCategoryResponse] = values;
+    createProduct(
+      // name:
+      `ColeHaan Zero Grand 2 (${personalName})`, 
+      // key, change to random to create more products:
+      `zerogrand2-${personalKey}`, 
+      // description:
+      'Comfy dress shoes that feel like sneakers.', 
+      // productType:
+      productTypeResponse.body, 
+       // sku:
+      `zerogrand-variant-X-${personalKey}`,
+      // priceCentAmount ($150.00 or €150.00):
+      15000, 
+      // taxCategory
+      taxCategoryResponse.body 
+    ).then(log)
+      .catch(log);
 
-//Use your functions getProductTypes and getTaxCategories
-// and use the first entry to create a new product
-var ptPromise = getProductTypes();
-var taxPromise = getTaxCategories();
-
-Promise.all([ptPromise, taxPromise]).then(function(values) {
-  const productType = values[0].body.results[0];
-  const taxCategory = values[1].body.results[0];
-
-  // Random string in training module only.
-  // Key and SKU must be unique, so this 
-  // prevents duplicate error with multiple participants.
-  const random = Math.random().toString(36).substring(5);
-
-  // Save SKU for use later.
-  createProduct(
-    'ColeHaan Zero Grand 2',
-    'zerogrand2-' + random,
-    'Comfy dress shoes that feel like sneakers.',
-    productType.id,
-    'SKU-zerogrand-master-' + random,
-    15000, //$150.00 assumed USD
-    taxCategory.id
-  )
-  .then(log).catch(log);
-
-}).catch(log);
+  }).catch(log);

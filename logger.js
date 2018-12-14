@@ -12,21 +12,25 @@ const codeLog = function (o, lang) {
 }
 
 module.exports.log = function (o, lang) {
-    if (typeof o == "String") {
+    lang = lang ? lang : 'json';
+    if (o.hasOwnProperty('stack')) {
+        console.error(o.stack)
+        codeLog(o)
+    }
+    else if (o.hasOwnProperty('body')
+        && o.hasOwnProperty('statusCode')
+        && o.statusCode < 300) {
+        codeLog(o.body, 'json');
+        console.log('');
+        const rainbow = chalkAnimation.rainbow('C O N G R A T U L A T I O N S : HTTP Status ' + o.statusCode);
+        setTimeout(() => {
+            rainbow.stop();
+        }, 2000);
+    }
+    else if (typeof o == "String") {
         console.log(o)
-    } else {
-        lang = lang ? lang : 'json';
-        if (o.hasOwnProperty('body')
-            && o.hasOwnProperty('statusCode')
-            && o.statusCode < 220) {
-            codeLog(o.body, 'json');
-            console.log('');
-            const rainbow = chalkAnimation.rainbow('C O N G R A T U L A T I O N S : HTTP Status ' + o.statusCode);
-            setTimeout(() => {
-                rainbow.stop();
-            }, 2000);
-        } else {
-            codeLog(o, lang);
-        }
+    }
+    else {
+        codeLog(o);
     }
 }
