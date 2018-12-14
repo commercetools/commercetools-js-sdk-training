@@ -109,13 +109,13 @@ const searchProducts = function searchProducts(attributeName, attributeValue, lo
   // Optional: Include some facets and try out other search features if you have time. 
 
   // #region SOLUTION
-  const uri =  createRequestBuilder({ projectKey })
-  .productProjectionsSearch
-  .filter(`variants.attributes.${attributeName} : "${attributeValue}"`)
-  .text(userInput, locale)
-  .markMatchingVariants(true)
-  .facet(`variants.attributes.${attributeName}`)
-  .build();
+  const uri = createRequestBuilder({ projectKey })
+    .productProjectionsSearch
+    .filter(`variants.attributes.${attributeName} : "${attributeValue}"`)
+    .text(userInput, locale)
+    .markMatchingVariants(true)
+    .facet(`variants.attributes.${attributeName}`)
+    .build();
   log(uri);
   return getClient().execute({
     uri,

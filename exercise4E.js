@@ -7,7 +7,6 @@ queryProducts(
     // attributeName
     'brand',
     // attributeValue
-    'ColeHaan'
-    )
+    'ColeHaan')
     .then(log)
     .catch(log);

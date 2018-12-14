@@ -11,7 +11,7 @@ const getClient = function getClient() {
   // https://commercetools.github.io/nodejs/sdk/api/sdkClient.html
 
   // #region SOLUTION
-  
+
   // TIP: All below can be copied from Merchant Center when creating an API Client
   //    BUT: there is/was a bug that the "scopes" were not wrapped in an array in the generated code.  
   //    BUT: the generated code does not yet pass a "fetch" implementation, you also have to add that. 
