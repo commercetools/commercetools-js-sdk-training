@@ -4,7 +4,7 @@ const { getClient, projectKey } = require('./client.js');
 const getTaxCategoryByKey = function getTaxCategoryByKey(key) {
   // TODO: 3.6
   // Get a specific tax category by its key
-  
+
   // Now please use the API request builder tool of the SDK to generate the URL path
   // https://commercetools.github.io/nodejs/sdk/api/apiRequestBuilder.html#createrequestbuilderoptions
   // Tip: You don't need custom services, the default CTP services are automatically provided:

@@ -10,6 +10,8 @@ The participants should finish following exercises:
 - Query all product types
 - Query all tax categories
 - Create a product
+- Query products
+- Search products
 - Create a customer
 - Create a cart
 - Query a cart by id
