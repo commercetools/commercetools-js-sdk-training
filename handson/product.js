@@ -29,7 +29,7 @@ const getProductTypeByKey = function getProductTypeByKey(key) {
 
 };
 
-const createProduct = function createProduct(name, key, description, productTypeKey, sku, priceCentAmount, taxCategoryKey) {
+const createProduct = function createProduct(name, key, description, productTypeKey, sku, priceCentAmount, taxCategoryKey, brand) {
   // TODO 4.D: Create a product, understand ResourceIdentifier vs. Reference
   // https://docs.commercetools.com/http-api-types#resourceidentifier
   // https://docs.commercetools.com/http-api-projects-products.html#create-a-product
@@ -62,7 +62,13 @@ const createProduct = function createProduct(name, key, description, productType
           centAmount: priceCentAmount,
           currencyCode: "USD"
         }
-      }]
+      }],
+      attributes: [
+        {
+          name: "brand",
+          value: brand
+        }
+      ]
     },
     taxCategory: {
       key: taxCategoryKey
