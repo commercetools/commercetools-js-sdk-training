@@ -22,7 +22,9 @@ createProduct(
   // priceCentAmount ($150.00 or €150.00):
   15000,
   // taxCategoryKey
-  'standard'
+  'standard',
+  // brand (product type attribute. optional, but assumed by following search and query exercises)
+  'ColeHaan'
 ).then(log)
   .catch(log);
 
