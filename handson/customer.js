@@ -1,41 +1,59 @@
-const middlewareAuth = require('@commercetools/sdk-middleware-auth');
-const httpMiddleware = require('@commercetools/sdk-middleware-http');
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-
+const { createRequestBuilder } = require('@commercetools/api-request-builder');
 const { getClient, projectKey } = require('./client.js');
 
-const createCustomer = function createCustomer(
-  email,
-  password,
-  firstName,
-  lastName,
-  country
-) {
-  // TODO: 5
-  // Create a customer
+const getCustomerById = (id) => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).customers.byId(id).build(),
+    method: 'GET'
+});
 
-  // #region SOLUTION
-  return getClient().then((client) => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const customerUri = requestBuilder.customers.build();
-    const customerRequest = {
-      uri: customerUri,
-      method: 'POST',
-      body: {
+const getCustomerByKey = (key) => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).customers.byKey(key).build(),
+    method: 'GET'
+});
+
+const getCustomerByKeyWITHOUTBUILDER = (key) => 
+  getClient().execute({
+    uri: `/${projectKey}/customers?key=${key}`,
+    method: 'GET'
+});
+
+const createCustomerKeyVerfiedEmail = (email, password, firstName, lastName, countryCode) => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).customers.build(),
+    method: 'POST',
+    body: {
+      email,
+      password,
+      firstName,
+      lastName,
+      addresses: [{
+        country: countryCode
+      }],
+      key: firstName + lastName + '02',
+      isEmailVerified: true
+    }
+})
+
+const createCustomer = (email, password, firstName, lastName, countryCode) => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).customers.build(),
+    method: 'POST',
+    body: {
         email,
         password,
         firstName,
         lastName,
-        addresses: [
-          {
-            country
-          }
-        ]
-      }
-    };
-    return client.execute(customerRequest);
-  });
-  // #endregion
-};
+        addresses: [{
+          country: countryCode
+        }]
+    }
+})
+
 
 module.exports.createCustomer = createCustomer;
+module.exports.createCustomerKeyVerfiedEmail = createCustomerKeyVerfiedEmail;
+module.exports.getCustomerByKey = getCustomerByKey;
+module.exports.getCustomerById = getCustomerById;
+module.exports.getCustomerByKeyWITHOUTBUILDER = getCustomerByKeyWITHOUTBUILDER;

@@ -1,66 +1,106 @@
-const sdkRequestBuilder = require('@commercetools/api-request-builder');
-
 const { getClient, projectKey } = require('./client.js');
+const log = require('../logger.js').log;
+const { createRequestBuilder } = require('@commercetools/api-request-builder');
 
-const getProductTypes = function getProductTypes() {
-  // TODO: 2.4
-  // Get a list of product types
+const getProductTypes = () => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).productTypes.build(),
+    method: 'GET'
+})
 
-  // #region SOLUTION
-  return getClient().then((client) => {
+const getProductTypeByKey = (key) =>
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).taxCategories.byKey(key).build(),
+    method: 'GET'
+})
 
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const productTypeUri = requestBuilder.productTypes.build();
-    const productRequest = {
-      uri: productTypeUri,
-      method: 'GET'
-    };
-    return client.execute(productRequest);
 
-  });
-  // #region SOLUTION
-};
-
-const createProduct = function createProduct(name, key, description, productTypeId, sku, priceCentAmount, taxCategoryId) {
-  // TODO: 4
-  //Create a product
-
-  // #region SOLUTION
-  return getClient().then((client) => {
-    const requestBuilder = sdkRequestBuilder.createRequestBuilder({ projectKey });
-    const productUri = requestBuilder.products.build();
-    const productRequest = {
-      uri: productUri,
-      method: 'POST',
-      body: {
-        name: { en: name },
-        key: key,
-        description: { en: description },
-        productType: {
-          id: productTypeId,
-          typeId: 'product-type'
-        },
-        slug: { en: key },
-        taxCategory: {
-          "typeId": "tax-category",
-          "id": taxCategoryId
-        },
-        masterVariant: {
-          sku: sku,
-          prices: [{
-            value: {
-              type: 'centPrecision',
-              currencyCode: 'USD',
-              centAmount: priceCentAmount
-            }
-          }]
+const createProductDraft = (productData) => {
+  const {name, key, description, productTypeKey, sku, priceCentAmount, currency, taxCategoryKey} = productData;
+  return {
+    key,
+    name: {
+      en: name
+    },
+    productType: {
+      key: productTypeKey
+    },
+    slug: {
+      en: name
+    },
+    description: {
+      en: description
+    },
+    masterVariant: {
+      sku,
+      prices: [ {
+        value : {
+          currencyCode: currency,
+          centAmount: priceCentAmount
         }
-      }
-    };
-    return client.execute(productRequest);
-  });
-  // #endregion
-};
+      }]
+    },
+    taxCategory: {
+      key: taxCategoryKey
+    }
+  }
+}
+
+
+const createProduct = (productData) => 
+    getClient().execute({
+      uri: createRequestBuilder({projectKey}).products.build(),
+      method: 'POST',
+      body: createProductDraft(productData)
+    })
+
+
+
+
+// Prepare query string in api playground
+//
+
+const queryProducts = (attributeName, attributeValue) => 
+    getClient().execute({
+      uri: createRequestBuilder({projectKey}).productProjections
+            .staged(true)
+            .where(`masterVariant(attributes(name = "${attributeName}")) and 
+                  masterVariant(attributes(value = "${attributeValue}"))`)
+                  // masterVariant(attributes(value(en = "${attributeValue}")))`) 
+            .whereOperator('or')
+            .where(`variants(attributes(name = "${attributeName}")) and 
+                  variants(attributes(value = "${attributeValue}"))`)
+                  // variants(attributes(value(en = "${attributeValue}")))`)
+            .expand('productType')
+            .build(),
+      method: 'GET'
+  })
+
+
+  const searchProducts = (attributeName, attributeValue, locale, userInput) => {
+    // TODO 4.F: Implement searching for products given the user's free text input. 
+    // Optional: Include some facets and try out other search features if you have time. 
+  
+    const uri = createRequestBuilder({projectKey}).productProjectionsSearch
+    .staged(false)
+    // .filter(`variants.attributes.${attributeName}.en: "${attributeValue}"`)
+    .text(userInput, locale)
+    .markMatchingVariants(true)
+    .facet(`variants.attributes.${attributeName}.en`)
+    .expand('productType')
+    .build();
+    log(uri);
+    return getClient().execute({
+      uri,
+      method: 'GET'
+    })
+  
+  }
+  
+
 
 module.exports.getProductTypes = getProductTypes;
+module.exports.getProductTypeByKey = getProductTypeByKey;
 module.exports.createProduct = createProduct;
+module.exports.queryProducts = queryProducts;
+module.exports.searchProducts = searchProducts;
