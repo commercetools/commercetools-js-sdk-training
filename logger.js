@@ -27,9 +27,6 @@ module.exports.log = function (o, lang) {
             rainbow.stop();
         }, 2000);
     }
-    else if (typeof o == "String") {
-        console.log(o)
-    }
     else {
         codeLog(o);
     }
