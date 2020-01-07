@@ -1,4 +1,4 @@
-# Commercetools JavaScript Training Excercises
+# commercetools JavaScript Training Exercises
 
 This repo contains exercises for the [commercetools JS SDK](https://github.com/commercetools/nodejs) training. 
 These exercises complement the training program, and are not intended to deliver a full understanding of commercetools by themselves.
