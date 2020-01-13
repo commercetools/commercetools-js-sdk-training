@@ -4,7 +4,7 @@ This repo contains exercises for the [commercetools JS SDK](https://github.com/c
 
 The exercises are intended to run in node.js 8 on your local machine. 
 
-The participants should finish following exercises:
+The participants will complete the following exercises:
 - Configure and create client
 - Get project info
 - Query all product types
