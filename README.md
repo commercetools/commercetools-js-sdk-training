@@ -23,8 +23,4 @@ Training participants should finish following exercises:
 - Create an order from cart
 - Delete cart
 
-Typically, the `exercise*.js` scripts will not be modified. Most tasks require implementing the modules in `handson/` until the `exercise*.js` scripts show the intended behavior. 
-
-These exercises complement a training program, they do not intend to help understanding commercetools by themselves.
-
-If you are interested in attending a training, please [contact us directly.](https://ok.commercetools.com/contact-us-en).
+Typically, the `exercise*.js` scripts will not be modified. Most tasks require implementing the modules in `handson/` until the `exercise*.js` scripts show the intended behavior.
