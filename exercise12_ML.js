@@ -4,14 +4,13 @@ const log = require('./logger.js').log;
 // TODO Get a recommendation based on your product name
 // TODO Get a recommendation based on the image of your product
 
-const getCategoryRecommendationImage = (imageUrl) => {
-    return getMLClient().execute({
+const getCategoryRecommendationImage = (imageUrl) => 
+    getMLClient().execute({
         uri: `/${projectKey}` + "/recommendations/general-categories?productImageUrl="
             + imageUrl,
         method: 'GET'
     })
-};
-getCategoryRecommendationImage('https%3A%2F%2F6092a3a4dd8dd1feea96-67f46997294c0e674fe62e1e8667c1e2.ssl.cf3.rackcdn.com%2F201110-a-french-wine-X94nNnGQ.jpg')
+getCategoryRecommendationImage('https%3A%2F%2Fcd187e7c6476e08608d8-d4aa998336568b97270285b27d1df4e5.ssl.cf3.rackcdn.com%2Fdownload-5kBYKfgz.jpg')
     .then(log).catch(log);
 
 

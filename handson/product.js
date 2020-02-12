@@ -2,19 +2,6 @@ const { getClient, projectKey } = require('./client.js');
 const log = require('../logger.js').log;
 const { createRequestBuilder } = require('@commercetools/api-request-builder');
 
-const getProductTypes = () => 
-  getClient().execute({
-    uri: createRequestBuilder({projectKey}).productTypes.build(),
-    method: 'GET'
-})
-
-const getProductTypeByKey = (key) =>
-  getClient().execute({
-    uri: createRequestBuilder({projectKey}).taxCategories.byKey(key).build(),
-    method: 'GET'
-})
-
-
 const createProductDraft = (productData) => {
   const {name, key, description, productTypeKey, sku, priceCentAmount, currency, taxCategoryKey} = productData;
   return {
@@ -33,6 +20,7 @@ const createProductDraft = (productData) => {
     },
     masterVariant: {
       sku,
+      key: sku,
       prices: [ {
         value : {
           currencyCode: currency,
@@ -46,38 +34,104 @@ const createProductDraft = (productData) => {
   }
 }
 
-
-const createProduct = (productData) => 
+const createProductAndMasterVariant = (productData) => 
     getClient().execute({
       uri: createRequestBuilder({projectKey}).products.build(),
       method: 'POST',
       body: createProductDraft(productData)
     })
 
-
-
-
-// Prepare query string in api playground
-//
-
-const queryProducts = (attributeName, attributeValue) => 
+const getProductByKey = (key) =>
     getClient().execute({
-      uri: createRequestBuilder({projectKey}).productProjections
-            .staged(true)
-            .where(`masterVariant(attributes(name = "${attributeName}")) and 
-                  masterVariant(attributes(value = "${attributeValue}"))`)
-                  // masterVariant(attributes(value(en = "${attributeValue}")))`) 
-            .whereOperator('or')
-            .where(`variants(attributes(name = "${attributeName}")) and 
-                  variants(attributes(value = "${attributeValue}"))`)
-                  // variants(attributes(value(en = "${attributeValue}")))`)
-            .expand('productType')
-            .build(),
-      method: 'GET'
-  })
+        uri: createRequestBuilder({projectKey}).products.byKey(key).build(),
+        method: 'GET'
+    })
+
+const getCategoryByKey = (key) =>
+    getClient().execute({
+        uri: createRequestBuilder({projectKey}).categories.byKey(key).build(),
+        method: 'GET'
+})
+
+const getProductTypes = () => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).productTypes.build(),
+    method: 'GET'
+})
+
+const getProductTypeByKey = (key) =>
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).taxCategories.byKey(key).build(),
+    method: 'GET'
+})
 
 
-  const searchProducts = (attributeName, attributeValue, locale, userInput) => {
+const assignProductToCategoryPROMISSES = (productKey, categoryKey) => 
+    getProductByKey(productKey)
+        .then (
+            (currentProduct) => {
+              const updateActions = [{
+                action: 'addToCategory',
+                category : {
+                    key: categoryKey
+                }
+              }, 
+              {
+              action: 'publish'
+              }
+              ];
+            return getClient().execute({
+                uri: createRequestBuilder({projectKey}).products.byKey(productKey).build(),
+                method: 'POST',
+                body: {
+                    version: currentProduct.body.version,
+                    actions: updateActions
+                }
+            })    
+            }
+    )
+
+const assignProductToCategoryAwait = async (productKey, categoryKey) => {
+      const product = await getProductByKey(productKey);
+      const updateActions = [{
+          action: 'addToCategory',
+          category : {
+              key: categoryKey
+          }
+        }, 
+        {
+        action: 'publish'
+        }
+      ];
+      return getClient().execute({
+                  uri: createRequestBuilder({projectKey}).products.byKey(productKey).build(),
+                  method: 'POST',
+                  body: {
+                      version: product.body.version,
+                      actions: updateActions
+                  }
+              })    
+  }
+
+const queryProducts = ({attributeName, attributeValue}) => 
+      getClient().execute({
+        uri: createRequestBuilder({projectKey}).productProjections
+              .staged(true)
+              .where(`masterVariant(attributes(name = "${attributeName}")) and 
+                    masterVariant(attributes(value = "${attributeValue}"))`)
+                    // masterVariant(attributes(value(en = "${attributeValue}")))`) 
+              .whereOperator('or')
+              .where(`variants(attributes(name = "${attributeName}")) and 
+                    variants(attributes(value = "${attributeValue}"))`)
+                    // variants(attributes(value(en = "${attributeValue}")))`)
+              .expand('productType')
+              .build(),
+        method: 'GET'
+    })
+
+
+
+  const searchProducts = ({attributeName, attributeValue, locale, userInput}) => {
     // TODO 4.F: Implement searching for products given the user's free text input. 
     // Optional: Include some facets and try out other search features if you have time. 
   
@@ -100,7 +154,11 @@ const queryProducts = (attributeName, attributeValue) =>
 
 
 module.exports.getProductTypes = getProductTypes;
+module.exports.getProductByKey = getProductByKey;
+module.exports.getCategoryByKey = getCategoryByKey;
+module.exports.assignProductToCategoryPROMISSES = assignProductToCategoryPROMISSES;
+module.exports.assignProductToCategoryAwait = assignProductToCategoryAwait;
 module.exports.getProductTypeByKey = getProductTypeByKey;
-module.exports.createProduct = createProduct;
+module.exports.createProductAndMasterVariant = createProductAndMasterVariant;
 module.exports.queryProducts = queryProducts;
 module.exports.searchProducts = searchProducts;

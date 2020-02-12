@@ -2,9 +2,8 @@ const log = require('./logger.js').log;
 const { createRequestBuilder } = require('@commercetools/api-request-builder')
 const { getClient, projectKey } = require('./handson/client.js')
 
-const createTypeDraft = () => {
-  return {
-    key: 'customer-shoesize',
+const createTypeDraft = {
+    key: 'customer-shoesize-new',
     name : {
       en : 'shoe size of the customer',
     },
@@ -16,16 +15,14 @@ const createTypeDraft = () => {
         label: { en: 'shoe size', de: 'Schuhgröße' },
         inputHint: 'SingleLine'
       }]
-  };
 }
 
-const createCustomerExtension = () => {
-    return getClient().execute({     
+const createCustomerExtension = () =>
+  getClient().execute({     
       uri: createRequestBuilder({ projectKey }).types.build(),
       method: 'POST',
-      body: createTypeDraft()
+      body: createTypeDraft
     })
-};
 
 createCustomerExtension()
   .then(log)

@@ -1,6 +1,22 @@
 const { createRequestBuilder } = require('@commercetools/api-request-builder')
 const { getClient, getMyAPIClient, projectKey } = require('./client.js')
 
+
+const getShippingMethodById = (id) => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).shipping-method.byId(id).build(),
+    method: 'GET'
+});
+
+const getShippingMethodByIdWithoutBuilder = (id) => 
+  getClient().execute({
+    uri: `/${projectKey}/shipping-methods?id=${id}`,
+    method: 'GET'
+});
+
+
+
+
 const createCartDraft = (cartData) => {
   const {currency, country, locale,  customerId} = cartData;
   return {
@@ -15,13 +31,12 @@ const createCartDraft = (cartData) => {
   }
 }
 
-const createCart = (cartData) => {
-  return getClient().execute({
+const createCart = (cartData) =>
+  getClient().execute({
     uri: createRequestBuilder({projectKey}).carts.build(),
     method: 'POST',
     body: createCartDraft(cartData)
-  })
-}
+})
 
 const getCartByCustomerId = (customerId) =>
   getClient().execute({
@@ -30,14 +45,16 @@ const getCartByCustomerId = (customerId) =>
 })
 
 
-const addProductToCart = async (cartData) => {
-  const {sku, customerId, quantity} = cartData;
+const addProductToCartBySkus = async (cartData) => {
+  const {customerId, skus} = cartData;
   cart = await getCartByCustomerId(customerId);
-  const updateActions = [{
-    action: 'addLineItem',
-    sku,
-    quantity
-  }];
+  const updateActions = skus.map(element => {
+    return {
+      action: 'addLineItem', 
+      sku: element, 
+      quantity: 1
+    }
+  });
   const uri = createRequestBuilder({projectKey}).carts.byId(cart.body.id).withVersion(cart.body.version).build();
   console.log(uri);  
   return getClient().execute({
@@ -50,8 +67,24 @@ const addProductToCart = async (cartData) => {
   })
 }
 
+const addDiscountCodeToCart = async ({customerId, code}) => {
+  cart = await getCartByCustomerId(customerId);
+  const updateActions = [{
+    action: 'addDiscountCode',
+    code: code
+  }];
+  return getClient().execute({
+    uri: createRequestBuilder({projectKey}).carts.byId(cart.body.id).build(),
+    method: 'POST',
+    body: {
+      version: cart.body.version,
+      actions: updateActions,
+    }
+  })
+}
 
-const captureOrderByCustomerId = async (customerId) => {
+
+const captureOrderByCustomerId = async ({customerId}) => {
   cart = await getCartByCustomerId(customerId);
   const orderDraft = {
     id: cart.body.id,
@@ -84,7 +117,11 @@ const printMyOrders = () =>
 module.exports.createCart = createCart;
 module.exports.createCartDraft = createCartDraft;
 module.exports.getCartByCustomerId = getCartByCustomerId;
-module.exports.addProductToCart = addProductToCart;
+module.exports.addProductToCartBySkus = addProductToCartBySkus;
+module.exports.addDiscountCodeToCart = addDiscountCodeToCart;
 module.exports.captureOrderByCustomerId = captureOrderByCustomerId;
 module.exports.deleteCurrentCartByCustomerId = deleteCurrentCartByCustomerId;
 module.exports.printMyOrders = printMyOrders;
+module.exports.getShippingMethodById = getShippingMethodById;
+module.exports.getShippingMethodByIdWithoutBuilder = getShippingMethodByIdWithoutBuilder;
+

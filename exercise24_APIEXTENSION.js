@@ -2,29 +2,24 @@ const log = require('./logger.js').log;
 const { createRequestBuilder } = require('@commercetools/api-request-builder')
 const { getClient, projectKey } = require('./handson/client.js')
 
-const createHttpExtensionDraft = () => {
-  const httpDestination = {
-    type : 'HTTP',
-    url : 'http://www.test.com'
-  };
-  const triggers = [{
-    resourceTypeId : 'cart',
-    actions : ['Create']
-  }];
-  return {
+const createHttpExtensionDraft = {
     key : 'cart-create-test-extension',
-    destination : httpDestination,
-    triggers : triggers
-  };
-}
+    destination : {
+      type : 'HTTP',
+      url : 'http://www.test.com'
+    },
+    triggers : [{
+      resourceTypeId : 'cart',
+      actions : ['Create']
+    }]
+};
 
-const setCartExtension = () => {
-  return getClient().execute({     
+const setCartExtension = () =>
+  getClient().execute({     
     uri: createRequestBuilder({ projectKey }).extensions.build(),
     method: 'POST',
     body: createHttpExtensionDraft()
   })
-};
 
 
 setCartExtension()

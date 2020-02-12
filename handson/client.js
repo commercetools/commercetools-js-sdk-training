@@ -6,7 +6,7 @@ const { createAuthMiddlewareForPasswordFlow } = require('@commercetools/sdk-midd
 const fetch = require('node-fetch');
 
 // TODO 1.1: centrally provide project key 
-const projectKey = 'training-20191024-def';
+const projectKey = 'training-photon-jan2020-default';
 
 
 const getClient = () => {
@@ -16,17 +16,17 @@ const getClient = () => {
   const fetch = require('node-fetch')
 
   const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
-    host: 'https://auth.sphere.io',
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
     projectKey,
     credentials: {
-      clientId: 'fgyRS5AEwnepwiGqrLSu_OuE',
-      clientSecret: 'ZjdhiG0863sVtVoUyOzZ_6UfOxFebTka',
+      clientId: 'kND9yGVubcsb6Uu1nMod0pTM',
+      clientSecret: 'vHKUQiv6SIwH2vZdCHthejW__MbCK8aK',
     },
     // scopes: ['manage_project:training-20191024-def'],
     fetch,
   })
   const httpMiddleware = createHttpMiddleware({
-    host: 'https://api.sphere.io',
+    host: 'https://api.europe-west1.gcp.commercetools.com',
     fetch,
   })
   const client = createClient({
@@ -42,11 +42,11 @@ const getMLClient = () => {
   const fetch = require('node-fetch')
 
   const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
-    host: 'https://auth.sphere.io',
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
     projectKey,
     credentials: {
-      clientId: 'pml8B7GrtDWLlbH3ssqc4uu1',
-      clientSecret: '2F1l80t6IbqiYL0YvJTwN6x-gTrbEWE7',
+      clientId: 'kND9yGVubcsb6Uu1nMod0pTM',
+      clientSecret: 'vHKUQiv6SIwH2vZdCHthejW__MbCK8aK',
     },
     // scopes: ['manage_project:training-20191024-def'],
     fetch,
@@ -68,13 +68,13 @@ const getMyAPIClient = () => {
   const fetch = require('node-fetch')
 
   const authMiddleware = createAuthMiddlewareForPasswordFlow({
-    host: 'https://auth.sphere.io',
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
     projectKey,
     credentials: {
-      clientId: 'cM8PvlG-3tFC6ixJBEkqDOt8',
-      clientSecret: '8JxY8tm5hR7E8-5f6fZb6kwI4DJ85exg',
+      clientId: 'kND9yGVubcsb6Uu1nMod0pTM',
+      clientSecret: 'vHKUQiv6SIwH2vZdCHthejW__MbCK8aK',
       user: {
-				username: 'persona2@example.com',
+				username: 'persona3@example.com',
 				password: 'password',
 			},
     },
@@ -82,7 +82,7 @@ const getMyAPIClient = () => {
     fetch,
   })
   const httpMiddleware = createHttpMiddleware({
-    host: 'https://api.sphere.io',
+    host: 'https://api.europe-west1.gcp.commercetools.com',
     fetch,
   })
   const client = createClient({
@@ -91,9 +91,37 @@ const getMyAPIClient = () => {
   return client;
 }
 
+const getImportClient = () => {
+  const { createClient } = require('@commercetools/sdk-client')
+  const { createAuthMiddlewareForClientCredentialsFlow } = require('@commercetools/sdk-middleware-auth')
+  const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http')
+  const fetch = require('node-fetch')
+
+  const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
+    projectKey,
+    credentials: {
+      clientId: 'kND9yGVubcsb6Uu1nMod0pTM',
+      clientSecret: 'vHKUQiv6SIwH2vZdCHthejW__MbCK8aK',
+    },
+    // scopes: ['manage_project:training-20191024-def'],
+    fetch,
+  })
+  const httpMiddleware = createHttpMiddleware({
+    host: 'https://import-eu.europe-west1.gcp.commercetools.com',
+    fetch,
+  })
+  const client = createClient({
+    middlewares: [authMiddleware, httpMiddleware],
+  })
+  return client;  
+};
+
 
 
 module.exports.getClient = getClient;
 module.exports.projectKey = projectKey;
 module.exports.getMLClient = getMLClient;
 module.exports.getMyAPIClient = getMyAPIClient;
+module.exports.getImportClient = getImportClient;
+

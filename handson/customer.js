@@ -1,6 +1,49 @@
 const { createRequestBuilder } = require('@commercetools/api-request-builder');
 const { getClient, projectKey } = require('./client.js');
 
+
+const createCustomerDraft = (customerData) => {
+  const {email, password, firstName, lastName, countryCode} = customerData;
+  return {
+    email,
+      password,
+      firstName,
+      lastName,
+      addresses: [{
+        country: countryCode
+      }]
+  }
+}
+
+const createCustomerDraftKeyShipping = (customerData) => {
+  const {email, password, firstName, lastName, countryCode} = customerData;
+  return {
+      key: firstName + '-' + lastName + '-key',
+      defaultShippingAddress: 0
+  }
+}
+
+const createCustomer = (customerData) => 
+  getClient().execute({
+      uri: createRequestBuilder({projectKey}).customers.build(),
+      method: 'POST',
+      body: createCustomerDraft(customerData)
+  })
+
+const createCustomerKeyVerfiedEmailAndDefaultShippingAddress = (customerData) => 
+  getClient().execute({
+    uri: createRequestBuilder({projectKey}).customers.build(),
+    method: 'POST',
+    body: {
+        ...createCustomerDraft(customerData),
+        ...createCustomerDraftKeyShipping(customerData),
+        isEmailVerified: true
+    }
+  })
+
+
+
+
 const getCustomerById = (id) => 
   getClient().execute({
     uri: createRequestBuilder({projectKey}).customers.byId(id).build(),
@@ -13,47 +56,8 @@ const getCustomerByKey = (key) =>
     method: 'GET'
 });
 
-const getCustomerByKeyWITHOUTBUILDER = (key) => 
-  getClient().execute({
-    uri: `/${projectKey}/customers?key=${key}`,
-    method: 'GET'
-});
-
-const createCustomerKeyVerfiedEmail = (email, password, firstName, lastName, countryCode) => 
-  getClient().execute({
-    uri: createRequestBuilder({projectKey}).customers.build(),
-    method: 'POST',
-    body: {
-      email,
-      password,
-      firstName,
-      lastName,
-      addresses: [{
-        country: countryCode
-      }],
-      key: firstName + lastName + '02',
-      isEmailVerified: true
-    }
-})
-
-const createCustomer = (email, password, firstName, lastName, countryCode) => 
-  getClient().execute({
-    uri: createRequestBuilder({projectKey}).customers.build(),
-    method: 'POST',
-    body: {
-        email,
-        password,
-        firstName,
-        lastName,
-        addresses: [{
-          country: countryCode
-        }]
-    }
-})
-
 
 module.exports.createCustomer = createCustomer;
-module.exports.createCustomerKeyVerfiedEmail = createCustomerKeyVerfiedEmail;
+module.exports.createCustomerKeyVerfiedEmailAndDefaultShippingAddress = createCustomerKeyVerfiedEmailAndDefaultShippingAddress;
 module.exports.getCustomerByKey = getCustomerByKey;
 module.exports.getCustomerById = getCustomerById;
-module.exports.getCustomerByKeyWITHOUTBUILDER = getCustomerByKeyWITHOUTBUILDER;

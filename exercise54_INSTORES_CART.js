@@ -3,26 +3,23 @@ const { getClient, projectKey, getMyAPIClient } = require('./handson/client.js')
 const { createCartDraft } = require('./handson/cart.js')
 
 
-const createStoreDraft = () => {
-    return {
+const createStoreDraft = {
       key : 'berlin-store',
       name : {
         en: 'Berlin-Store',
         de: 'Berlin-Haus'
       }
-    };
-}
+  };
 
-const createStore = () => {
-    return getClient().execute({     
+const createStore = () => 
+  getClient().execute({     
         uri: `/${projectKey}` + "/stores",
       method: 'POST',
-      body: createStoreDraft()
+      body: createStoreDraft
     })
-};
 
-const createInstoreCart = (customerId, storeKey) => {
-    return getMyAPIClient().execute({     
+const createInstoreCart = (customerId, storeKey) =>
+  getMyAPIClient().execute({     
         uri: `/${projectKey}` + "/in-store/key=" + storeKey + "/me/carts",
         method: 'POST',
         body: createCartDraft({
@@ -32,11 +29,10 @@ const createInstoreCart = (customerId, storeKey) => {
             customerId : customerId
           })
       })
-}
 
 createStoreAndInstoreCart = async (customerId) => {
       store = await createStore();
-      cart = await createInstoreCart('c5852aa6-bee3-4bf9-a603-bb8782d34349', store.body.key);
+      cart = await createInstoreCart('a6f9eb52-35bc-4c88-942f-eca50f1058d3', store.body.key);
       return cart;
 }
 
