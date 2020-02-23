@@ -7,14 +7,17 @@ const getCustomerByKey = (key) => { }
 
 const getCustomerByKeyWITHOUTBUILDER = (key) => { }
  
-const createCustomerKeyVerfiedEmail = (email, password, firstName, lastName, countryCode) => { }
+const createCustomerDraft = (customerData) => { }
 
-const createCustomer = (email, password, firstName, lastName, countryCode) => { }
+const createCustomerDraftKeyShipping = (customerData) => { }
 
+const createCustomer = (customerData) => { }
+
+const createCustomerKeyVerfiedEmailAndDefaultShippingAddress = (customerData) =>  { }
 
 
 module.exports.createCustomer = createCustomer;
-module.exports.createCustomerKeyVerfiedEmail = createCustomerKeyVerfiedEmail;
+module.exports.createCustomerKeyVerfiedEmailAndDefaultShippingAddress = createCustomerKeyVerfiedEmailAndDefaultShippingAddress;
 module.exports.getCustomerByKey = getCustomerByKey;
 module.exports.getCustomerById = getCustomerById;
 module.exports.getCustomerByKeyWITHOUTBUILDER = getCustomerByKeyWITHOUTBUILDER;

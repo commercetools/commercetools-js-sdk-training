@@ -2,11 +2,13 @@ const log = require('./logger.js').log;
 const { createRequestBuilder } = require('@commercetools/api-request-builder')
 const { getClient, projectKey } = require('./handson/client.js')
 
-const createTypeDraft = () => { }
+
+const createHighestCartDraft = { }
  
-const createCustomerExtension = () => { }
+const createCustomObject = () => { }
  
-createCustomerExtension()
+
+createCustomObject()
   .then(log)
   .catch(log);
 

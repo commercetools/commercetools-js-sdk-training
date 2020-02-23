@@ -3,7 +3,7 @@ const { getClient, projectKey, getMyAPIClient } = require('./handson/client.js')
 const { createCartDraft } = require('./handson/cart.js')
 
 
-const createStoreDraft = () => { }
+const createStoreDraft = { }
 
 const createStore = () => { }
  
