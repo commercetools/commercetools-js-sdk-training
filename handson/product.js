@@ -15,7 +15,7 @@ const getProductByKey = (key) => { }
 const getCategoryByKey = (key) => { }
 
 
-const assignProductToCategoryPROMISSES = (productKey, categoryKey) => { }
+const assignProductToCategoryPROMISES = (productKey, categoryKey) => { }
 
 const assignProductToCategoryAwait = async (productKey, categoryKey) => { }
 
@@ -32,7 +32,7 @@ const searchProducts = (attributeName, attributeValue, locale, userInput) => { }
 module.exports.getProductTypes = getProductTypes;
 module.exports.getProductByKey = getProductByKey;
 module.exports.getCategoryByKey = getCategoryByKey;
-module.exports.assignProductToCategoryPROMISSES = assignProductToCategoryPROMISSES;
+module.exports.assignProductToCategoryPROMISES = assignProductToCategoryPROMISSES;
 module.exports.assignProductToCategoryAwait = assignProductToCategoryAwait;
 module.exports.getProductTypeByKey = getProductTypeByKey;
 module.exports.createProductAndMasterVariant = createProductAndMasterVariant;
