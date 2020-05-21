@@ -32,7 +32,7 @@ const searchProducts = (attributeName, attributeValue, locale, userInput) => { }
 module.exports.getProductTypes = getProductTypes;
 module.exports.getProductByKey = getProductByKey;
 module.exports.getCategoryByKey = getCategoryByKey;
-module.exports.assignProductToCategoryPROMISES = assignProductToCategoryPROMISSES;
+module.exports.assignProductToCategoryPROMISES = assignProductToCategoryPROMISES;
 module.exports.assignProductToCategoryAwait = assignProductToCategoryAwait;
 module.exports.getProductTypeByKey = getProductTypeByKey;
 module.exports.createProductAndMasterVariant = createProductAndMasterVariant;
