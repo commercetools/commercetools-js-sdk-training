@@ -35,7 +35,7 @@
     "@commercetools/sdk-client": "^1.5.8",
     "@commercetools/sdk-middleware-auth": "^4.0.3",
     "@commercetools/sdk-middleware-http": "^4.0.2",
-    "chalk-animation": "^1.6.0",
+    "chalk-animation": "^2.0.3",
     "cli-highlight": "^2.1.4",
     "node-fetch": "^2.2.0"
   }
